@@ -10,6 +10,8 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    env:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
     steps:
       - name: Checkout repo
@@ -21,9 +23,6 @@ jobs:
           terraform_version: 1.13.3   # pick your version
 
       - name: Configure Terraform Cloud token
-        env:
-          # Map GitHub secret to what Terraform expects
-          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
         run: |
           echo "Terraform Cloud token configured"
           if [ -z "$TF_TOKEN_app_terraform_io" ]; then
